@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "259015031492",
+    "project_id": "edusarthi-83f98",
+    "storage_bucket": "edusarthi-83f98.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:259015031492:android:1ebc3b1b7947c2dd61e791",
+        "android_client_info": {
+          "package_name": "com.example.edusarthi_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgOWQTmK0XR-LsBigWhU1yOo1k7AbHFQ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
