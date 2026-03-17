@@ -3,7 +3,7 @@ import 'package:edusarthi_app/main.dart';
 
 void main() {
   testWidgets('EduSarthi app smoke test', (WidgetTester tester) async {
-    await tester.pumpWidget(const EduSarthiApp());
-    expect(find.text('EduSarthi'), findsOneWidget);
+    await tester.pumpWidget(const SkillSathiApp());
+    expect(find.text('SkillSathi'), findsOneWidget);
   });
 }

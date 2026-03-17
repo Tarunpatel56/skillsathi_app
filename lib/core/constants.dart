@@ -1,4 +1,4 @@
-import 'dart:io' show Platform;
+
 
 /// SkillSathi App Constants
 class AppConstants {
@@ -10,23 +10,13 @@ class AppConstants {
   static const String appTagline = 'Learn Smart, Grow Fast';
 
   // ── API Base URL ──────────────────────────
-  // Auto-detect: emulator uses 10.0.2.2, real device uses PC's IP
+  // Using adb reverse: phone's localhost:8000 → PC's localhost:8000
   static String get baseUrl {
     const envUrl = String.fromEnvironment('BASE_URL', defaultValue: '');
     if (envUrl.isNotEmpty) return envUrl;
 
-    // For Android emulator use 10.0.2.2, for real device use PC's local IP
-    // Change this IP to your PC's WiFi IP address
-    const String pcIp = '172.31.22.46';
-    const String emulatorIp = '10.0.2.2';
-
-    try {
-      // Real device detection: if running on Android but not emulator
-      if (Platform.isAndroid) {
-        return 'http://$pcIp:8000/api/v1';
-      }
-    } catch (_) {}
-    return 'http://$emulatorIp:8000/api/v1';
+    // adb reverse tcp:8000 tcp:8000 — maps phone's localhost to PC
+    return 'http://127.0.0.1:8000/api/v1';
   }
 
   // ── API Endpoints ─────────────────────────
@@ -52,6 +42,12 @@ class AppConstants {
   static const String aptitudeGenerateQuiz = '/aptitude/generate-quiz';
   static const String aptitudeSubmitQuiz = '/aptitude/submit-quiz';
   static const String aptitudeTopics = '/aptitude/topics';
+
+  // AI Tutor Module (Gemini)
+  static const String aiTutorAnalyzeImage = '/ai-tutor/analyze-image';
+  static const String aiTutorLectureNotes = '/ai-tutor/lecture-notes';
+  static const String aiTutorGenerateMcqs = '/ai-tutor/generate-mcqs';
+  static const String aiTutorGenerateRoadmap = '/ai-tutor/generate-roadmap';
 
   // ── Theme Colors (Light Blue + White) ─────
   static const int primaryColorHex = 0xFF4A90D9;     // Light Blue
