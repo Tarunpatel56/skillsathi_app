@@ -1,4 +1,4 @@
-
+import 'package:flutter/foundation.dart';
 
 /// SkillSathi App Constants
 class AppConstants {
@@ -10,13 +10,39 @@ class AppConstants {
   static const String appTagline = 'Learn Smart, Grow Fast';
 
   // ── API Base URL ──────────────────────────
-  // Using adb reverse: phone's localhost:8000 → PC's localhost:8000
+  // `BASE_URL` takes priority. Otherwise you can override just the host and
+  // port with `API_HOST` and `API_PORT` when running on a device.
   static String get baseUrl {
-    const envUrl = String.fromEnvironment('BASE_URL', defaultValue: '');
+    final envUrl = const String.fromEnvironment(
+      'BASE_URL',
+      defaultValue: '',
+    ).trim();
     if (envUrl.isNotEmpty) return envUrl;
 
-    // adb reverse tcp:8000 tcp:8000 — maps phone's localhost to PC
-    return 'http://127.0.0.1:8000/api/v1';
+    final host = const String.fromEnvironment(
+      'API_HOST',
+      defaultValue: '',
+    ).trim();
+    final port = const String.fromEnvironment(
+      'API_PORT',
+      defaultValue: '8000',
+    ).trim();
+
+    if (host.isNotEmpty) {
+      return 'http://$host:$port/api/v1';
+    }
+
+    // For Android devices use your PC's LAN IP.
+    // Change this IP to your PC's WiFi IP address if you are not using
+    // `--dart-define=API_HOST=...`.
+    const String pcIp = '10.33.215.46';
+    const String emulatorIp = '10.0.2.2';
+
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      return 'http://$pcIp:$port/api/v1';
+    }
+
+    return 'http://$emulatorIp:$port/api/v1';
   }
 
   // ── API Endpoints ─────────────────────────
@@ -42,12 +68,6 @@ class AppConstants {
   static const String aptitudeGenerateQuiz = '/aptitude/generate-quiz';
   static const String aptitudeSubmitQuiz = '/aptitude/submit-quiz';
   static const String aptitudeTopics = '/aptitude/topics';
-
-  // AI Tutor Module (Gemini)
-  static const String aiTutorAnalyzeImage = '/ai-tutor/analyze-image';
-  static const String aiTutorLectureNotes = '/ai-tutor/lecture-notes';
-  static const String aiTutorGenerateMcqs = '/ai-tutor/generate-mcqs';
-  static const String aiTutorGenerateRoadmap = '/ai-tutor/generate-roadmap';
 
   // ── Theme Colors (Light Blue + White) ─────
   static const int primaryColorHex = 0xFF4A90D9;     // Light Blue

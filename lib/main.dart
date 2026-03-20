@@ -1,27 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:edusarthi_app/core/api_service.dart';
 import 'package:edusarthi_app/features/english/controller/english_controller.dart';
 import 'package:edusarthi_app/features/interview/controller/interview_controller.dart';
 import 'package:edusarthi_app/features/aptitude/controller/aptitude_controller.dart';
-import 'package:edusarthi_app/features/video_call/controller/video_call_controller.dart';
-import 'package:edusarthi_app/features/classroom/controller/classroom_controller.dart';
 import 'package:edusarthi_app/features/english/screens/chat_screen.dart';
 import 'package:edusarthi_app/features/english/screens/english_home_screen.dart';
 import 'package:edusarthi_app/features/english/screens/grammar_fix_screen.dart';
 import 'package:edusarthi_app/features/interview/screens/interview_screen.dart';
 import 'package:edusarthi_app/features/aptitude/screens/quiz_screen.dart';
 import 'package:edusarthi_app/features/profile/screens/profile_screen.dart';
-import 'package:edusarthi_app/features/video_call/screens/video_call_screen.dart';
-import 'package:edusarthi_app/features/classroom/screens/classroom_home_screen.dart';
-import 'package:edusarthi_app/features/ai_tutor/controller/ai_tutor_controller.dart';
-import 'package:edusarthi_app/features/ai_tutor/screens/ai_tutor_home_screen.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await _initializeFirebase();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -32,22 +24,11 @@ void main() async {
   runApp(const SkillSathiApp());
 }
 
-Future<void> _initializeFirebase() async {
-  try {
-    await Firebase.initializeApp();
-  } catch (error) {
-    debugPrint('Firebase initialization skipped: $error');
-  }
-}
-
 void _initServices() {
   Get.put(ApiService());
   Get.lazyPut(() => EnglishController(), fenix: true);
   Get.lazyPut(() => InterviewController(), fenix: true);
   Get.lazyPut(() => AptitudeController(), fenix: true);
-  Get.put(VideoCallController());
-  Get.put(ClassroomController());
-  Get.lazyPut(() => AiTutorController(), fenix: true);
 }
 
 class SkillSathiApp extends StatelessWidget {
@@ -305,30 +286,6 @@ class DashboardScreen extends StatelessWidget {
                 color: const Color(0xFFFF6B35),
                 onTap: () => Get.to(() => const QuizScreen()),
               ),
-              const SizedBox(height: 12),
-              _FeatureCard(
-                title: 'Video Call',
-                subtitle: 'Live mentoring, Screen Share, Whiteboard, Chat',
-                icon: Icons.videocam_rounded,
-                color: const Color(0xFF8B5CF6),
-                onTap: () => Get.to(() => const VideoCallScreen()),
-              ),
-              const SizedBox(height: 12),
-              _FeatureCard(
-                title: 'Online Classroom',
-                subtitle: 'Live classes like Zoom — Teacher & Student panels',
-                icon: Icons.school_rounded,
-                color: const Color(0xFF10B981),
-                onTap: () => Get.to(() => const ClassroomHomeScreen()),
-              ),
-              const SizedBox(height: 12),
-              _FeatureCard(
-                title: 'AI Tutor ✨',
-                subtitle: 'Gemini AI — Image analysis, MCQs, Roadmaps & more',
-                icon: Icons.auto_awesome_rounded,
-                color: const Color(0xFF667EEA),
-                onTap: () => Get.to(() => const AiTutorHomeScreen()),
-              ),
               const SizedBox(height: 24),
 
               // ── Quick Actions ──────────────
@@ -359,27 +316,6 @@ class DashboardScreen extends StatelessWidget {
                     icon: Icons.bolt_rounded,
                     color: const Color(0xFFFF6B35),
                     onTap: () => Get.to(() => const QuizScreen()),
-                  ),
-                  const SizedBox(width: 12),
-                  _QuickAction(
-                    label: 'Video\nCall',
-                    icon: Icons.videocam_rounded,
-                    color: const Color(0xFF8B5CF6),
-                    onTap: () => Get.to(() => const VideoCallScreen()),
-                  ),
-                  const SizedBox(width: 12),
-                  _QuickAction(
-                    label: 'Live\nClass',
-                    icon: Icons.school_rounded,
-                    color: const Color(0xFF10B981),
-                    onTap: () => Get.to(() => const ClassroomHomeScreen()),
-                  ),
-                  const SizedBox(width: 12),
-                  _QuickAction(
-                    label: 'AI\nTutor',
-                    icon: Icons.auto_awesome_rounded,
-                    color: const Color(0xFF667EEA),
-                    onTap: () => Get.to(() => const AiTutorHomeScreen()),
                   ),
                 ],
               ),
